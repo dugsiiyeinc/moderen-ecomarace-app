@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - byruun</title>
+    <link rel="stylesheet" href="../css/shop.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <nav class="nav">
+        <div class="container nav-inner">
+            <a class="brand" href="home.html">
+                <img src="../assets/logo.jpg" alt="byruun logo">
+            </a>
+            <div class="nav-links">
+         <button class="cart-btn" id="cartBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            <span class="badge" id="cartCount">0</span>
+          </button>
+        <span id="hello-user" class="helper" style="display:none"></span>
+           <a href="auth.html" id="signin-btn" class="btn">sign in</a>
+    <a href="#" id="logout-btn" class="btn" style="display:none">Log out</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="section">
+            <div class="toolbar">
+                <h1 style="margin:0">Shop</h1>
+                <div class="searchbar">
+                    <input id="search" class="input" placeholder="Search by name or brand…">
+                    <select id="sort" class="input">
+                        <option value="featured">Featured</option>
+                        <option value="rating">Top rated</option>
+                        <option value="price-asc">Price: Low → High</option>
+                        <option value="price-desc">Price: High → Low</option>
+                    </select>
+                </div>
+            </div>
+            <section id="shop-grid"> 
+            <div id="cart-container">
+            </div>
+        </section>
+      <div class="modal" id="cartModal">
+      <div class="modal-content">
+        <button class="close-btn" id="closeCartModal">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+        <h2>Your Cart</h2>
+        <div id="cartItems" class="cart-items">
+          </div>
+        <div class="cart-total">
+          <span>Total:</span>
+          <span id="cartTotal">$0.00</span>
+        </div>
+        <button class="checkout-btn" id="checkoutBtn">Proceed to Checkout</button>
+        </div>
+    </div>
+    </main>
+
+    <footer>
+    <div class="containe">
+        <div class="footer-top">
+            <div class="footer-info">
+                <img src="../assets/logo.jpg" alt="byruun's logo">
+                <p>Classic looks for Men, Women & Kids.</p>
+            <div class="socials">
+              <a href="https://www.instagram.com" class="icon" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+              <a href="https://www.facebook.com"  class="icon" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+              <a href="https://www.linkedin.com"  class="icon" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="home.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Shop</h3>
+                    <ul>
+                        <li><a href="mens-wear.html">Mens shoes</a></li>
+                        <li><a href="accessories.html">Accessories</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Help</h3>
+                    <ul>
+                        <li><a href="faq.html">FAQ’s</a></li>
+                        <li><a href="return-policy.html">Return Policy</a></li>
+                        <li><a href="order-status.html">Order Status</a></li>
+                        <li><a href="shipping-delivery.html">Shipping & Delivery</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>My Profile</h3>
+                    <ul>
+                        <li><a href="my-account.html">My Account</a></li>
+                        <li><a href="track-order.html">Track Order</a></li>
+                        <li><a href="my-cart.html">My Cart</a></li>
+                        <li><a href="order-history.html">Order History</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 byruun. All Rights Reserved.</p>
+            <div class="pay-list">
+              <a class="pay-card"><i class="fa-brands fa-cc-paypal"></i></a>
+              <a class="pay-card"><i class="fa-brands fa-cc-visa"></i></a>
+              <a class="pay-card"><i class="fa-brands fa-cc-mastercard"></i></a>
+              <a class="pay-card"><i class="fa-brands fa-cc-discover"></i></a>
+              <a class="pay-card"><i class="fa-brands fa-cc-amex"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="../js/shop.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/auth.js"></script>
+</body>
+</html>
