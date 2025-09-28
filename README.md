@@ -47,12 +47,13 @@ Contributions are what make the open-source community such an amazing place to l
 
 5. Open a Pull Request.
 
-
-
-
-
-
 ## Screenshots
+<img width="1530" height="836" alt="Screenshot From 2025-09-27 20-55-21" src="https://github.com/user-attachments/assets/5646a52b-b448-4247-8184-b7a82712b26b" />
 
-![App Screenshot](home/hayat/Pictures/Screenshots/Screenshot From 2025-09-27 20-55-21.png)
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
+
+
 
