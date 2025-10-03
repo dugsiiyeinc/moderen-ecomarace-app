@@ -22,87 +22,175 @@ body {
 }
 
 /* Navigation Bar */
+
 .nav {
-  background-color: #ffffff;
-  border-bottom: 1px solid #eee;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+    background-color: #fff; /* White background */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    /* padding: 20px; */
 }
 
 .nav-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.nav .brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.brand img {
+    height: 70px; /* Adjust as needed */
+    vertical-align: middle;
 }
 
-.nav .brand img {
-  width: 100px;
-  height: 70px;
-  border-radius: 50%;
+/* Desktop Links Container */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Space between links */
+    font-weight: 700;
 }
 
-.nav .brand span {
-  font-weight: 700;
-  font-size: 20px;
+.nav-links a {
+    text-decoration: none;
+    color: #f70101;
+    padding: 5px 10px;
+    font-size: 16px;
+    transition: color 0.3s;
 }
 
-.nav .nav-links {
-  display: flex;
-  gap: 20px;
-  align-items: center;
+.nav-links a:hover,
+.nav-links .active {
+    color: #ce3057; /* Example highlight color */
 }
 
-.nav .nav-links a {
-  text-decoration: none;
-  color: #333;
-  font-size: 16px;
-  padding: 10px 12px;
-  border-radius: 8px;
+.btn {
+    background-color: #f70505;
+    color: rgb(243, 240, 240) !important;
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+#signin-btn{
+  background-color: #fa0101;
+}
+#logout-btn{
+ background-color: #fa0101;
+}
+.btn:hover {
+    background-color: #ff236c;
 }
 
-.nav .nav-links a.active, .nav .nav-links a:hover {
-  background-color: #ffe7f1;
-  color: #ff0101;
-}
-.nav .nav-links .btn{
-  color: #ffffff;
+/* Hide the checkbox input completely */
+.menu-checkbox {
+    display: none;
 }
 
-.nav .btn {
-  background-color: #ff0101;
-  color: white;
-  padding: 10px 14px;
-  border-radius: 8px;
-  font-size: 14px;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  gap: 8px;
-  align-items: center;
+/* Hide the hamburger icon on desktop */
+.menu-icon {
+    display: none;
 }
 
-.nav .btn:hover {
-  background-color: #ff0101;
-}
+/* ================================== */
+/* MOBILE STYLES (Hamburger Menu) */
+/* ================================== */
 
-.nav .helper {
-  color: #777;
-}
+@media (max-width: 768px) {
+    
+    .nav-inner {
+        padding: 10px;
+    }
 
-.nav .badge {
-  background-color: #ff0101;
-  color: white;
-  font-size: 12px;
-  padding: 4px 8px;
-  border-radius: 12px;
+    /* 1. SHOW the Hamburger Icon (the label) */
+    .menu-icon {
+        display: block;
+        cursor: pointer;
+        padding: 10px;
+        z-index: 100; /* Ensure it's above the menu */
+    }
+
+    /* Hamburger Lines Styling */
+    .navicon {
+        background: #333;
+        display: block;
+        height: 2px;
+        width: 25px;
+        position: relative;
+        transition: all 0.3s ease-out;
+    }
+
+    .navicon::before,
+    .navicon::after {
+        content: '';
+        display: block;
+        height: 100%;
+        width: 100%;
+        background: #333;
+        position: absolute;
+        transition: all 0.3s ease-out;
+    }
+
+    .navicon::before {
+        top: 8px; 
+    }
+
+    .navicon::after {
+        top: -8px; 
+    }
+
+    /* 2. HIDE the Navigation Links on mobile by default */
+    .nav-links {
+        display: block;
+        position: absolute;
+        top: 60px; /* Below the header (adjust based on your header height) */
+        left: 0;
+        right: 0;
+        background-color: #f8f8f8; /* Light background for mobile menu */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        max-height: 0; /* Collapse the menu */
+        overflow: hidden;
+        transition: max-height 0.3s ease-in-out;
+        flex-direction: column;
+        gap: 0;
+        padding: 0;
+    }
+
+    /* Make links full width and stack */
+    .nav-links a,
+    .nav-links span {
+        display: block;
+        text-align: center;
+        padding: 10px 20px;
+        border-bottom: 1px solid #eee;
+    }
+
+    /* Remove bottom border from last element */
+    .nav-links a:last-child {
+        border-bottom: none;
+    }
+
+    /* 3. MENU TOGGLE MAGIC (When checkbox is checked) */
+    /* Use the checked pseudo-class and adjacent sibling selector (~) */
+    #menu-toggle:checked ~ .nav-links {
+        max-height: 400px; /* Expand menu. Should be > actual menu height */
+        padding: 10px 0;
+    }
+
+    /* 4. HAMBURGER ICON ANIMATION (to 'X') */
+    #menu-toggle:checked ~ .menu-icon .navicon {
+        background: transparent; /* Hide the middle line */
+    }
+
+    #menu-toggle:checked ~ .menu-icon .navicon::before {
+        transform: rotate(-45deg);
+        top: 0;
+    }
+
+    #menu-toggle:checked ~ .menu-icon .navicon::after {
+        transform: rotate(45deg);
+        top: 0;
+    }
 }
 
 /* Sign-in Modal */
@@ -228,7 +316,9 @@ img{ max-width:100%; display:block; }
   font-weight:700;
   transition: box-shadow .2s ease, transform .02s ease, background .2s ease, border-color .2s ease;
 }
-
+#by{
+  background-color: #f70101;
+}
 .btn:hover{
   box-shadow:0 8px 24px rgba(0,0,0,.08);
   transform:translateY(-1px);

@@ -1,3 +1,7 @@
+/* ==================================== */
+/* 1. PC/DESKTOP (Base Styles: >= 1025px) */
+/* ==================================== */
+
 * {
   margin: 0;
   padding: 0;
@@ -5,30 +9,44 @@
   box-sizing: border-box;
 }
 
-.layout {  
-    padding: 60px 68px 40px;
-    border-radius: 4px;
-    max-width: 1500px;
-    margin: 300px 700px ;
+/* Container centers the form vertically and horizontally on large screens */
+.login-container {
+    min-height: 100vh; 
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+    background-color: #141414;
 }
+
+.layout {  
+    margin: 0 auto; 
+    padding: 60px 20px; 
+    max-width: 1500px;
+}
+
+/* The actual form box styling */
 .auth-container {
   background-color: rgba(0, 0, 0, 0.75);
-  padding: 20px;
+  padding: 60px; /* Generous padding for a desktop form */
   border-radius: 10px;
-  max-width: 400px;
+  max-width: 450px; /* Slightly wider for desktop */
   width: 100%;
   color: white;
 }
+
+/* Element Styles - Standard across all sizes */
 .auth-container h1 {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  font-size: 32px;
 }
 
 .auth-container input {
   width: 100%;
   display: block;
-  padding: 10px;
-  margin: 10px 0;
+  padding: 16px; 
+  margin: 12px 0;
   background: #333;
   border: 1px solid #444;
   color: white;
@@ -40,25 +58,108 @@ input:hover {
 }
 .auth-container button {
   width: 100%;
-  padding: 10px;
+  padding: 16px;
   background-color: #e50914;
   border: none;
   color: white;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: bold;
   border-radius: 5px;
+  margin-top: 30px;
+  transition: background-color 0.3s;
 }
 
 .auth-container p {
-  text-align: center;
-  margin-top: 10px;
+  text-align: left;
+  margin-top: 25px;
+  font-size: 16px;
+  color: #737373;
 }
 
 .auth-container a {
   color: white;
   text-decoration: none;
 }
-
 .auth-container a:hover {
   text-decoration: underline;
+}
+
+/* ==================================== */
+/* 2. TABLET DESIGN (601px to 1024px) */
+/* ==================================== */
+@media (min-width: 601px) and (max-width: 1024px) {
+    /* Keep centering, but adjust form sizing for tablet */
+    
+    .auth-container {
+        padding: 40px; /* Reduced padding from desktop */
+        max-width: 400px;
+    }
+    
+    .auth-container h1 {
+        font-size: 30px;
+    }
+    
+    .auth-container input {
+        padding: 14px;
+        margin: 10px 0;
+    }
+    
+    .auth-container button {
+        padding: 14px;
+        font-size: 17px;
+        margin-top: 25px;
+    }
+}
+
+
+/* ==================================== */
+/* 3. MOBILE DESIGN (Up to 600px) */
+/* ==================================== */
+@media (max-width: 600px) {
+   
+    /* Primary Fix: Align content to the top instead of the center.
+       This prevents the form from being hidden on small screen scrolling/keyboard pop-up. */
+    .login-container {
+        align-items: flex-start; 
+        padding-top: 10px;
+        background-color: #141414; /* Full screen dark background */
+    }
+    
+    .layout {
+        padding: 0; /* Remove padding */
+        width: 100%;
+    }
+
+    /* Make the form box fluid and stretch to fit the viewport */
+    .auth-container {
+        /* Use margins to create space from screen edges */
+        margin: 0 5%; 
+        width: 90%;
+        max-width: 90%;
+        
+        /* Reduce padding significantly for mobile screens */
+        padding: 30px 20px; 
+        border-radius: 0; /* Optional: Makes it look full-width on mobile */
+    }
+    
+    .auth-container h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    
+    .auth-container input {
+        padding: 12px;
+        margin: 8px 0;
+    }
+    
+    .auth-container button {
+        padding: 12px;
+        font-size: 16px;
+        margin-top: 15px;
+    }
+    
+    .auth-container p {
+        font-size: 14px;
+    }
 }

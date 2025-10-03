@@ -1,94 +1,117 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const authSwitch = document.querySelector("#authSwitch");
-    const authButton = document.querySelector("#authButton");
-    const authForm = document.querySelector("#authForm");
-    const formTitle = document.querySelector("#form-title");
-    const usernameInput = document.querySelector("#username");
-    const emailInput = document.querySelector("#email");
-    const passwordInput = document.querySelector("#password");
-    const confirmPasswordInput = document.querySelector("#confirmPassword");
+    // 1. Get DOM Elements
+    const authForm = document.getElementById('authForm');
+    const formTitle = document.getElementById('form-title');
+    const authButton = document.getElementById('authButton');
+    const switchFormLink = document.getElementById('switchForm');
 
-    let signIn = true;
+    const usernameInput = document.getElementById('username');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const passwordInput = document.getElementById('password');
+    const emailInput = document.getElementById('email');
 
-    // Check if the form element exists before adding the listener
-    if (authForm) {
-        authForm.addEventListener("submit", (e) => {
-            e.preventDefault();
+    let isRegisterMode = false;
 
-            if (signIn) {
-                // --- Sign-in Logic ---
-                const users = JSON.parse(localStorage.getItem("users")) || [];
-                const existingUser = users.find(
-                    (user) => user.email === emailInput.value && user.password === passwordInput.value
-                );
+    // A key to store user data in Local Storage
+    const STORAGE_KEY = 'byruun_user_data';
 
-                if (existingUser) {
-                    localStorage.setItem("onlineUser", JSON.stringify(existingUser));
-                    window.location.href = '../html/index.html';
+    // 2. Function to Toggle Form Mode and Autocomplete
+    const toggleFormMode = () => {
+        isRegisterMode = !isRegisterMode;
+
+        if (isRegisterMode) {
+            // --- REGISTER Mode ---
+            formTitle.textContent = 'Register';
+            authButton.textContent = 'Register';
+            switchFormLink.textContent = 'Sign In now';
+
+            usernameInput.style.display = 'block';
+            confirmPasswordInput.style.display = 'block';
+            passwordInput.setAttribute('autocomplete', 'new-password');
+
+        } else {
+            // --- SIGN IN Mode ---
+            formTitle.textContent = 'Sign In';
+            authButton.textContent = 'Sign In';
+            switchFormLink.textContent = 'Register now';
+
+            usernameInput.style.display = 'none';
+            confirmPasswordInput.style.display = 'none';
+            passwordInput.setAttribute('autocomplete', 'current-password');
+        }
+
+        // Reset the form fields when switching modes
+        authForm.reset();
+    };
+
+    // 3. Attach Event Listener for Toggling
+    switchFormLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        toggleFormMode();
+    });
+
+    // 4. Handle Form Submission
+    authForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value.trim();
+
+        if (isRegisterMode) {
+            // === REGISTRATION LOGIC ===
+            const username = usernameInput.value.trim();
+            const confirmPassword = confirmPasswordInput.value.trim();
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            // Check if user already exists (by email)
+            if (localStorage.getItem(STORAGE_KEY + '_' + email)) {
+                alert("A user with this email already exists. Please sign in.");
+                return;
+            }
+
+            // Save new user data
+            const userData = {
+                username: username,
+                email: email,
+                password: password // NOTE: In a real app, NEVER store passwords in plaintext!
+            };
+            localStorage.setItem(STORAGE_KEY + '_' + email, JSON.stringify(userData));
+
+            alert("Registration successful! Please sign in.");
+            toggleFormMode(); // Switch to sign-in page
+
+        } else {
+            // === SIGN IN LOGIC (Automatic Redirect on Success) ===
+            const storedDataJSON = localStorage.getItem(STORAGE_KEY + '_' + email);
+
+            if (storedDataJSON) {
+                const storedData = JSON.parse(storedDataJSON);
+
+                // Check password
+                if (storedData.password === password) {
+                    
+                    // Set a simple flag to show the user is logged in
+                    localStorage.setItem('isLoggedIn', 'true'); 
+                    localStorage.setItem('currentUserName', storedData.username);
+                    
+                    // SUCCESS: Redirect to the home page
+                    console.log("Sign In successful. Redirecting to home page...");
+                    window.location.href = 'index.html'; 
+                    return;
+
                 } else {
-                    alert("Invalid Credentials");
+                    alert("Sign In failed: Invalid password.");
                 }
             } else {
-                // --- Sign-up Logic ---
-                const users = JSON.parse(localStorage.getItem("users")) || [];
-
-                const existingUser = users.find(
-                    (user) => user.email === emailInput.value
-                );
-
-                if (existingUser) {
-                    alert(`User with email ${existingUser.email} already exists.`);
-                    return;
-                }
-                
-                if (confirmPasswordInput.value !== passwordInput.value) {
-                    alert("Password mismatch");
-                    return;
-                }
-
-                const newUser = {
-                    username: usernameInput.value,
-                    email: emailInput.value,
-                    password: passwordInput.value,
-                };
-
-                users.push(newUser);
-                localStorage.setItem("users", JSON.stringify(users));
-                
-                localStorage.setItem("onlineUser", JSON.stringify(newUser));
-                
-                alert("Registered successfully!");
-                window.location.href = '../html/index.html';
+                alert("Sign In failed: User not found. Please register.");
             }
-        });
-    }
-
-    // Check if the switch element exists before adding the listener
-    if (authSwitch) {
-        authSwitch.addEventListener("click", (e) => {
-            e.preventDefault();
-            if (e.target.id === "switchFormLink") {
-                switchAuthForm();
-            }
-        });
-    }
-
-    function switchAuthForm() {
-        signIn = !signIn;
-        authForm.reset();
-
-        if (!signIn) {
-            authButton.textContent = "Sign up";
-            formTitle.textContent = "Sign up";
-            usernameInput.style.display = "block";
-            confirmPasswordInput.style.display = "block";
-            authSwitch.innerHTML = `Already have an account? <a href="#" id="switchFormLink">Sign in</a>`;
-        } else {
-            authButton.textContent = "Sign in";
-            formTitle.textContent = "Sign in";
-            usernameInput.style.display = "none";
-            confirmPasswordInput.style.display = "none";
-            authSwitch.innerHTML = `Don't have an account? <a href="#" id="switchFormLink">Sign up</a>`;
         }
-    }
+    });
+
+    // 5. Initialize the form to Sign In mode on load
+    passwordInput.setAttribute('autocomplete', 'current-password');
 });
